@@ -1,0 +1,17 @@
+# secrets
+lastfm.env
+.env
+
+# Python / Jupyter
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+
+# data (optional: it can be re-downloaded and may be large)
+*.parquet
+*.csv
+# ...but keep the bundled sample
+!sample_data/*.parquet
+
+# raw API cache
+cache/

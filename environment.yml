@@ -1,0 +1,12 @@
+name: lastfm-viz
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pandas
+  - pyarrow
+  - matplotlib
+  - requests
+  - charset-normalizer
+  - python-dotenv
+  - jupyterlab
