@@ -12,19 +12,25 @@ Explore a Last.fm scrobble history with pandas and matplotlib: what gets played,
 
 ![New artist discovery](figures/new_artist_discovery.png)
 
+![Plays by country](figures/plays_by_country.png)
+
+![Top artists by country](figures/top_artists_by_country.png)
+
 ![Listening by weekday and hour](figures/listening_heatmap.png)
 
 ## What's in here
 
 | File | What it does |
 |---|---|
-| `00_ingest.ipynb` | Pulls scrobbles from the Last.fm API (`user.getRecentTracks`), then fetches tags and global stats for every artist (`artist.getTopTags`, `artist.getInfo`). Raw artist responses are cached so the pull can resume, and everything is saved as Parquet. Also writes the sample data. |
+| `00_ingest.ipynb` | Pulls scrobbles from the Last.fm API (`user.getRecentTracks`), then fetches tags and global stats for every artist (`artist.getTopTags`, `artist.getInfo`), and looks up each artist's country of origin on MusicBrainz. Raw artist responses are cached so the pull can resume, and everything is saved as Parquet. Also writes the sample data. |
 | `01_top_charts.ipynb` | Top artists, albums, songs, and tags for a chosen period (week, month, 3 months, 6 months, year, or all time). |
 | `02_time_patterns.ipynb` | Scrobbles per month, and a weekday-by-hour heatmap. |
 | `03_genres.ipynb` | How the genre mix changes month to month, one panel per top tag. |
 | `04_discovery.ipynb` | New artists per month, and the share of each month's plays that went to artists heard for the first time. |
+| `05_countries.ipynb` | A world map shaded by share of plays by artist country of origin, with a ranked bar chart of the top countries, and the top artists from each of the top countries. |
 | `tags.py` | Tag cleaning: the stoplist, aliases, weight cutoff, and tags-per-artist limit. |
 | `viz.py` | Shared chart colors and helpers. |
+| `profile.json`, `profile.png` | Username and profile picture shown in the corner of each chart. Written by `00_ingest.ipynb`. |
 | `sample_data/` | A recent slice of scrobbles with the matching artist and tag rows. |
 | `figures/` | Charts exported by the notebooks. |
 
@@ -50,7 +56,7 @@ jupyter lab
    TIMEZONE=America/New_York
    ```
    `TIMEZONE` is optional and defaults to UTC. Set it to your own [IANA time zone name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) so the hour-of-day and weekday charts use your local time.
-3. Run `00_ingest.ipynb` from top to bottom. The scrobble pull takes a few minutes. The artist step makes two API calls per unique artist, so a large library takes a while; it is cached and can be re-run after an interruption.
+3. Run `00_ingest.ipynb` from top to bottom. The scrobble pull takes a few minutes. The artist step makes two API calls per unique artist, and the country step makes one MusicBrainz request per artist at about a second each, so a large library takes a while. Both are cached and can be re-run after an interruption. Once `scrobbles.parquet` exists, re-running the notebook only requests scrobbles newer than the saved ones, and only looks up artists it hasn't seen; set `FULL_REFRESH = True` in the fetch cell to pull the whole history again.
 4. Run the other notebooks. They use your data instead of the sample once `scrobbles.parquet` exists.
 
 ## Notes on the data
@@ -60,6 +66,8 @@ jupyter lab
 - **Tag cleaning** (in `tags.py`): drop tags that aren't about the music (`seen live`, `favorites`), vocalist-type tags, nationalities, and decades; drop tags with weight below 20; merge spelling variants (`hip hop` into `hip-hop`); keep at most 10 tags per artist. The lists are easy to edit.
 - **Tag totals overlap.** A play counts once for every tag its artist has, so tag totals add up to more than the number of scrobbles.
 - **New artists are relative to the history.** An artist is new in the month of their first scrobble, so listening from before the history starts isn't counted. The first month is left out of the discovery chart, since every artist is new then. With the sample data, "new" is relative to the sample.
+- **Country of origin comes from MusicBrainz.** Last.fm has no country field, so each artist is looked up by MBID. Artists without an MBID or without a country on MusicBrainz are left out of the country shares, and the chart subtitle reports how much of the listening that covers. Country outlines are Natural Earth data, downloaded on first run.
+- **Profile picture and username.** `00_ingest.ipynb` saves both from `user.getInfo`, and `viz.py` draws them in the corner of every chart. Delete `profile.json` to leave them off.
 - **Partial months.** The monthly chart leaves out the current month, since it is still in progress.
 
 ## Planned
