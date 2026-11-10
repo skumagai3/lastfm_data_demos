@@ -13,21 +13,34 @@ from PIL import Image, ImageDraw
 
 # DejaVu Sans has no CJK glyphs, so artist names like these would show as boxes. Matplotlib tries the
 # fonts in this list in order for each character, using whichever of them is installed.
-CJK_FONTS = ['Hiragino Sans', 'Apple SD Gothic Neo', 'PingFang SC', 'Arial Unicode MS',
+CJK_FONTS = ['Hiragino Sans', 'Apple SD Gothic Neo', 'PingFang SC',
              'Noto Sans CJK JP', 'Noto Sans CJK KR', 'Noto Sans CJK SC', 'Yu Gothic', 'Malgun Gothic', 'Microsoft YaHei']
 installed_fonts = {font.name for font in font_manager.fontManager.ttflist}
 mpl.rcParams['font.family'] = ['DejaVu Sans'] + [name for name in CJK_FONTS if name in installed_fonts]
 
-BAR_COLOR = '#2a78d6'
-SURFACE = '#fcfcfb'
-INK = '#0b0b0b'
-INK_SECONDARY = '#52514e'
+# dark theme: the surface and ink colors, plus the blues stepped for a dark background
+BAR_COLOR = '#3987e5'
+SURFACE = '#1a1a19'
+INK = '#f0efec'
+INK_SECONDARY = '#c3c2b7'
 MUTED = '#898781'
-GRID = '#e1e0d9'
-BASELINE = '#c3c2b7'
+GRID = '#2c2c2a'
+BASELINE = '#383835'
 
-# one-hue blue ramp, light to dark, for magnitude
-BLUE_RAMP = ['#cde2fb', '#9ec5f4', '#6da7ec', '#3987e5', '#256abf', '#184f95', '#0d366b']
+# one-hue blue ramp for magnitude, dark to light: the lowest values sit close to the background and the highest stand out
+BLUE_RAMP = ['#0d366b', '#184f95', '#256abf', '#3987e5', '#6da7ec', '#9ec5f4', '#cde2fb']
+
+# defaults for anything a chart doesn't color explicitly
+mpl.rcParams.update({
+    'figure.facecolor': SURFACE,
+    'axes.facecolor': SURFACE,
+    'savefig.facecolor': SURFACE,
+    'text.color': INK,
+    'axes.labelcolor': INK_SECONDARY,
+    'axes.edgecolor': BASELINE,
+    'xtick.color': MUTED,
+    'ytick.color': MUTED,
+})
 
 PROFILE_JSON = 'profile.json'  # written by 00_ingest.ipynb
 PROFILE_IMAGE = 'profile.png'
