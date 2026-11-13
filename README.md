@@ -12,6 +12,8 @@ Explore a Last.fm scrobble history with pandas and matplotlib: what gets played,
 
 ![Genre share over time](figures/genre_share_over_time.png)
 
+![Top artists by genre](figures/top_artists_by_genre.png)
+
 ![New artist discovery](figures/new_artist_discovery.png)
 
 ![Plays by country](figures/plays_by_country.png)
@@ -47,6 +49,7 @@ From my own scrobbles, so yours will differ, and they only cover songs from my l
 | `06_summary.ipynb` | One summary figure: headline numbers, top artists, scrobbles per month, weekday-by-hour heatmap, top tags, top countries, and new artists per month. |
 | `07_mainstream.ipynb` | How mainstream my listening is: my plays by artist popularity next to the global Last.fm chart, with the two distributions compared (Wasserstein distance and KS statistic) and my typical artist popularity by month. |
 | `08_top_over_time.ipynb` | Running total of plays for my top 10 artists, albums, and songs, one line each, from the first scrobble to the latest. One chart for each. |
+| `09_top_artists_per_genre.ipynb` | The most played artists in each of my top genres, and a function that looks up the top artists for any tag. |
 | `tags.py` | Tag cleaning: the stoplist, aliases, weight cutoff, and tags-per-artist limit. |
 | `viz.py` | Shared dark theme colors and chart helpers. |
 | `profile.json`, `profile.png` | Username and profile picture shown in the corner of each chart. Written by `00_ingest.ipynb`. |
