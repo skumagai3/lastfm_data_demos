@@ -24,9 +24,15 @@ Explore a Last.fm scrobble history with pandas and matplotlib: what gets played,
 
 ![Popularity distributions](figures/popularity_distributions.png)
 
+![Top 10 artists over time](figures/top_artists_over_time.png)
+
+![Top 10 albums over time](figures/top_albums_over_time.png)
+
+![Top 10 songs over time](figures/top_songs_over_time.png)
+
 ## What I found
 
-From my own history, so yours will differ. My listening is close to the global baseline: 55% of my plays are artists with 1M to 5M listeners, against 54% for the chart, and my typical artist is a little more popular than the chart's median (about 2 to 3M listeners against 1.86M). Next to the chart I play more of the very biggest artists (21% above 5M listeners, against 15%) and fewer in the middle (13% between 250k and 1M, against 26%).
+From my own scrobbles, so yours will differ, and they only cover songs from my library (see the notes below). My listening is close to the global baseline: 56% of my plays are artists with 1M to 5M listeners, against 54% for the chart, and my typical artist is a little more popular than the chart's median (about 2 to 3M listeners against 1.86M). Next to the chart I play more of the very biggest artists (21% above 5M listeners, against 15%) and fewer in the middle (13% between 250k and 1M, against 26%).
 
 ## What's in here
 
@@ -40,6 +46,7 @@ From my own history, so yours will differ. My listening is close to the global b
 | `05_countries.ipynb` | A world map shaded by share of plays by artist country of origin, with a ranked bar chart of the top countries, and the top artists from each of the top countries. |
 | `06_summary.ipynb` | One summary figure: headline numbers, top artists, scrobbles per month, weekday-by-hour heatmap, top tags, top countries, and new artists per month. |
 | `07_mainstream.ipynb` | How mainstream my listening is: my plays by artist popularity next to the global Last.fm chart, with the two distributions compared (Wasserstein distance and KS statistic) and my typical artist popularity by month. |
+| `08_top_over_time.ipynb` | Running total of plays for my top 10 artists, albums, and songs, one line each, from the first scrobble to the latest. One chart for each. |
 | `tags.py` | Tag cleaning: the stoplist, aliases, weight cutoff, and tags-per-artist limit. |
 | `viz.py` | Shared dark theme colors and chart helpers. |
 | `profile.json`, `profile.png` | Username and profile picture shown in the corner of each chart. Written by `00_ingest.ipynb`. |
@@ -73,6 +80,7 @@ jupyter lab
 
 ## Notes on the data
 
+- **Scrobbles only cover my library.** The app I scrobble with only logs songs from my own library, so anything I listened to outside it was never scrobbled. A lot of my listening isn't in this data, and every count here is a lower bound on what I actually played. Charts about discovery and popularity are affected most, since music I only streamed never shows up.
 - **Time zone.** Timestamps are converted to the `TIMEZONE` setting in `00_ingest.ipynb`. The charts that group by hour or weekday show local time.
 - **Tags are user-generated and attached to artists.** Last.fm has no genre field, so genres come from artist tags. Each tag has a weight from 0 to 100.
 - **Tag cleaning** (in `tags.py`): drop tags that aren't about the music (`seen live`, `favorites`), vocalist-type tags, nationalities, and decades; drop tags with weight below 20; merge spelling variants (`hip hop` into `hip-hop`); keep at most 10 tags per artist. The lists are easy to edit.

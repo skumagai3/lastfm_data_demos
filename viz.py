@@ -30,6 +30,9 @@ BASELINE = '#383835'
 # one-hue blue ramp for magnitude, dark to light: the lowest values sit close to the background and the highest stand out
 BLUE_RAMP = ['#0d366b', '#184f95', '#256abf', '#3987e5', '#6da7ec', '#9ec5f4', '#cde2fb']
 
+# eight categorical colors for charts with several lines, in a fixed order and stepped for the dark background
+SERIES_COLORS = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#008300', '#9085e9', '#e66767']
+
 # defaults for anything a chart doesn't color explicitly
 mpl.rcParams.update({
     'figure.facecolor': SURFACE,

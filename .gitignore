@@ -15,3 +15,6 @@ __pycache__/
 
 # raw API cache
 cache/
+
+# macOS
+.DS_Store
