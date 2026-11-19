@@ -2,6 +2,12 @@
 
 Explore a Last.fm scrobble history with pandas and matplotlib: what gets played, when, and how listening breaks down by genre. The notebooks pull data from the Last.fm API, clean it, and chart it.
 
+## Why I made this
+
+My dad used to own a record store, so I grew up with all kinds of music playing all the time. Lately I've been getting into listening to records myself. I wanted to practice data analysis on something I actually care about, and my listening history was the obvious choice.
+
+One of my favorite ways to find new music is to pick a random number between 1 and 500 and listen to the matching album on Rolling Stone's list of the 500 greatest albums of all time.
+
 ![Summary](figures/summary.png)
 
 ![Top artists](figures/top_artists_overall.png)
@@ -34,7 +40,7 @@ Explore a Last.fm scrobble history with pandas and matplotlib: what gets played,
 
 ## What I found
 
-From my own scrobbles, so yours will differ, and they only cover songs from my library (see the notes below). My listening is close to the global baseline: 56% of my plays are artists with 1M to 5M listeners, against 54% for the chart, and my typical artist is a little more popular than the chart's median (about 2 to 3M listeners against 1.86M). Next to the chart I play more of the very biggest artists (21% above 5M listeners, against 15%) and fewer in the middle (13% between 250k and 1M, against 26%).
+From my own scrobbles, so yours will differ, and they mostly cover songs from my library (see the notes below). My listening is close to the global baseline: 55.8% of my plays are artists with 1M to 5M listeners, against 54.5% for the chart, and my typical artist is a little more popular than the chart's median (about 2.4M listeners against 1.86M). Next to the chart I play more of the very biggest artists (21.2% above 5M listeners, against 14.5%) and fewer in the middle (12.6% between 250k and 1M, against 25.5%).
 
 ## What's in here
 
@@ -83,7 +89,7 @@ jupyter lab
 
 ## Notes on the data
 
-- **Scrobbles only cover my library.** The app I scrobble with only logs songs from my own library, so anything I listened to outside it was never scrobbled. A lot of my listening isn't in this data, and every count here is a lower bound on what I actually played. Charts about discovery and popularity are affected most, since music I only streamed never shows up.
+- **Scrobbles mostly cover my library.** The app I usually scrobble with only logs songs from my own library, so anything I listened to outside it was never scrobbled. Sometimes I use a scrobbler called Neptunes, which does pick up music that isn't in my library, so some of that listening is here, but not all of it. A lot of my listening isn't in this data, and every count here is a lower bound on what I actually played. Charts about discovery and popularity are affected most, since a lot of the music I only streamed never shows up.
 - **Time zone.** Timestamps are converted to the `TIMEZONE` setting in `00_ingest.ipynb`. The charts that group by hour or weekday show local time.
 - **Tags are user-generated and attached to artists.** Last.fm has no genre field, so genres come from artist tags. Each tag has a weight from 0 to 100.
 - **Tag cleaning** (in `tags.py`): drop tags that aren't about the music (`seen live`, `favorites`), vocalist-type tags, nationalities, and decades; drop tags with weight below 20; merge spelling variants (`hip hop` into `hip-hop`); keep at most 10 tags per artist. The lists are easy to edit.
